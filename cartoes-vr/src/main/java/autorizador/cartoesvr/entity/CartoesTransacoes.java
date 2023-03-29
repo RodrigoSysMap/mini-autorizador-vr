@@ -20,7 +20,7 @@ public class CartoesTransacoes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id", nullable = false, unique = true)
-    private Long idTranscao;
+    private Long idTransacao;
 
     @Column(name="cartao_id", nullable = false)
     private Long idCartao;
