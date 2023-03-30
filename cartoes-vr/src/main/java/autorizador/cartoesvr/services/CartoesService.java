@@ -2,12 +2,15 @@ package autorizador.cartoesvr.services;
 
 
 import autorizador.cartoesvr.dto.CartaoDto;
+import autorizador.cartoesvr.dto.CartaoTransacaoDto;
 import autorizador.cartoesvr.entity.Cartoes;
 import autorizador.cartoesvr.entity.CartoesSaldo;
+import autorizador.cartoesvr.entity.CartoesTransacoes;
 import autorizador.cartoesvr.enums.CartaoStatusEnum;
 import autorizador.cartoesvr.enums.ParametroGenericoEnum;
 import autorizador.cartoesvr.repository.CartoesRepository;
 import autorizador.cartoesvr.repository.CartoesSaldoRepository;
+import autorizador.cartoesvr.repository.CartoesTransacoesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,12 +27,15 @@ public class CartoesService {
     CartoesRepository cartoesRepository;
     @Autowired
     CartoesSaldoRepository cartoesSaldoRepository;
+    @Autowired
+    CartoesTransacoesRepository cartoesTransacoesRepository;
+
     @Transactional
     public boolean criarCartao(CartaoDto cartaoDto){
         boolean cartaoCriado = false;
 
         if(!validarCartaoExiste(cartaoDto.getNumeroCartao())){
-
+            BigDecimal saldoInicial = ParametroGenericoEnum.SALDO_INICIAL.getValue();
             Cartoes novoCartao = cartoesRepository.saveAndFlush(Cartoes.builder()
                     .cartaoNumero(cartaoDto.getNumeroCartao())
                     .saldo(null)
@@ -37,8 +43,11 @@ public class CartoesService {
                     .senhaCartao(cartaoDto.getSenha()).build());
 
             cartoesSaldoRepository.save(CartoesSaldo.builder().cartoes(novoCartao)
-                    .vlrSaldo(ParametroGenericoEnum.SALDO_INICIAL.getValue()).build());
+                    .vlrSaldo(saldoInicial).build());
 
+            cartoesTransacoesRepository.save(CartoesTransacoes.builder()
+                    .idCartao(novoCartao.getIdCartao())
+                    .vlrTransacao(saldoInicial).build());
 
             cartaoCriado = true;
         }
@@ -63,5 +72,6 @@ public class CartoesService {
         return cartaoInfo.get().getSaldo().getVlrSaldo();
 
     }
+
 
 }
