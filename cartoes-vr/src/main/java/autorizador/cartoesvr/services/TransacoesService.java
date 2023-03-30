@@ -55,7 +55,7 @@ public class TransacoesService {
         if(cartaoInfo.isEmpty()) { return TransacaoEnum.CARTAO_INEXISTENTE.getValue(); }
 
         if(cartaoInfo.get().getStatus().equals(CartaoStatusEnum.CARTAO_INATIVO.getValue()))
-            { return TransacaoEnum.CARTAO_INATIVO.getValue(); }
+            { return TransacaoEnum.CARTAO_INEXISTENTE.getValue(); }
 
         if(!cartaoInfo.get().getSenhaCartao().equals(cartaoTransacaoDto.getSenhaCartao())) {
             return TransacaoEnum.SENHA_INVALIDA.getValue(); }
