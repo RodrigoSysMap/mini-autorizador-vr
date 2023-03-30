@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table(name="cartoes_saldo")
+@Table(name="cartoes_transacoes")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

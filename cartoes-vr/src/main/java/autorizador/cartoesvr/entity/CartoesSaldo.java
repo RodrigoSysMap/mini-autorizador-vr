@@ -1,6 +1,7 @@
 package autorizador.cartoesvr.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,17 +15,20 @@ import java.util.Date;
 @Entity
 @Table(name="cartoes_saldo")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartoesSaldo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id", nullable = false, unique = true)
+    @Column(name="id")
     private Long idSaldo;
 
-    @Column(name="cartao_id", nullable = false)
-    private Long idCartao;
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "cartao_id")
+    private Cartoes cartoes;
 
     @Column(name="saldo", nullable = false)
     private BigDecimal vlrSaldo;
