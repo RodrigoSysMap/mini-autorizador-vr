@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/cartoes")
+@RequestMapping("/v1/cartoes")
 @Tag(name="Cartões Manutenção", description = "Operações com cartões")
 public class CartoesController {
 

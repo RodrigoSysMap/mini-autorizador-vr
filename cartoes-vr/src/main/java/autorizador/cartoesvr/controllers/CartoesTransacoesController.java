@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/transacoes")
+@RequestMapping("/v1/transacoes")
 @Tag(name="Transações Manutenção", description = "Operações com cartões e suas transações")
 public class CartoesTransacoesController {
 
