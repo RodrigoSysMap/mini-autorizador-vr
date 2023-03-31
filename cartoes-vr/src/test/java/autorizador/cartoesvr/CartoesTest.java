@@ -3,8 +3,6 @@ package autorizador.cartoesvr;
 import autorizador.cartoesvr.dto.CartaoDto;
 import autorizador.cartoesvr.dto.CartaoTransacaoDto;
 import autorizador.cartoesvr.entity.Cartoes;
-import autorizador.cartoesvr.entity.CartoesTransacoes;
-import autorizador.cartoesvr.enums.CartaoStatusEnum;
 import autorizador.cartoesvr.enums.ParametroGenericoEnum;
 import autorizador.cartoesvr.enums.TransacaoEnum;
 import autorizador.cartoesvr.repository.CartoesRepository;
@@ -14,23 +12,20 @@ import autorizador.cartoesvr.services.CartoesService;
 
 import autorizador.cartoesvr.services.TransacoesService;
 import org.junit.FixMethodOrder;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runners.MethodSorters;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+
 @FixMethodOrder(MethodSorters.DEFAULT)
-public class CartoesTeste extends  CartoesVrApplicationTests {
+public class CartoesTest extends  CartoesVrApplicationTests {
 
     @Mock
     CartoesRepository cartoesRepository;
@@ -52,8 +47,8 @@ public class CartoesTeste extends  CartoesVrApplicationTests {
     void testCriarUmNovoCartao1(){
 
         CartaoDto cartaoTeste = new CartaoDto();
-        cartaoTeste.setNumeroCartao("11111");
-        cartaoTeste.setSenha("123");
+        cartaoTeste.setNumeroCartao("5555666677778880");
+        cartaoTeste.setSenha("123456");
 
         boolean cardCreated = cartoesService.criarCartao(cartaoTeste);
         assertTrue(cardCreated);
@@ -65,12 +60,12 @@ public class CartoesTeste extends  CartoesVrApplicationTests {
     void testVerificarSaldoCartaoPositivo2(){
 
         CartaoDto cartaoTeste = new CartaoDto();
-        cartaoTeste.setNumeroCartao("11112");
-        cartaoTeste.setSenha("123");
+        cartaoTeste.setNumeroCartao("5555666677778881");
+        cartaoTeste.setSenha("123456");
 
         boolean cardCreated = cartoesService.criarCartao(cartaoTeste);
 
-        Optional<Cartoes> cartaoInfo = cartoesService.buscarCartaoNumero("11112");
+        Optional<Cartoes> cartaoInfo = cartoesService.buscarCartaoNumero("5555666677778881");
         assertTrue(cartaoInfo.get().getSaldo().getVlrSaldo().compareTo(BigDecimal.ZERO) >=0);
 
     }
@@ -79,13 +74,13 @@ public class CartoesTeste extends  CartoesVrApplicationTests {
     void testVerificaSaldoInicialDoCartao3(){
 
         CartaoDto cartaoTesteSaldo = new CartaoDto();
-        cartaoTesteSaldo.setNumeroCartao("11113");
-        cartaoTesteSaldo.setSenha("1234");
+        cartaoTesteSaldo.setNumeroCartao("5555666677778882");
+        cartaoTesteSaldo.setSenha("123456");
 
         boolean cardCreated = cartoesService.criarCartao(cartaoTesteSaldo);
 
 
-        Optional<Cartoes> cartaoInfo = cartoesService.buscarCartaoNumero("11113");
+        Optional<Cartoes> cartaoInfo = cartoesService.buscarCartaoNumero("5555666677778882");
         assertEquals(cartaoInfo.get().getSaldo().getVlrSaldo()
                 .subtract(ParametroGenericoEnum.SALDO_INICIAL.getValue()), BigDecimal.valueOf(0, 2));
 
@@ -96,12 +91,12 @@ public class CartoesTeste extends  CartoesVrApplicationTests {
     void testVerificarSaldoInsuficienteCartao(){
 
         CartaoDto cartaoTeste = new CartaoDto();
-        cartaoTeste.setNumeroCartao("11114");
-        cartaoTeste.setSenha("123");
+        cartaoTeste.setNumeroCartao("5555666677778883");
+        cartaoTeste.setSenha("123456");
 
         boolean cardCreated = cartoesService.criarCartao(cartaoTeste);
 
-        Optional<Cartoes> cartaoInfo = cartoesService.buscarCartaoNumero("11114");
+        Optional<Cartoes> cartaoInfo = cartoesService.buscarCartaoNumero("5555666677778883");
 
         CartaoTransacaoDto transacaoTeste = new CartaoTransacaoDto();
         transacaoTeste.setNumeroCartao(cartaoInfo.get().getCartaoNumero());
@@ -125,12 +120,12 @@ public class CartoesTeste extends  CartoesVrApplicationTests {
     void testTransacaoComSenhaInvalida(){
 
         CartaoDto cartaoTeste = new CartaoDto();
-        cartaoTeste.setNumeroCartao("11115");
-        cartaoTeste.setSenha("123");
+        cartaoTeste.setNumeroCartao("5555666677778884");
+        cartaoTeste.setSenha("123456");
 
         boolean cardCreated = cartoesService.criarCartao(cartaoTeste);
 
-        Optional<Cartoes> cartaoInfo = cartoesService.buscarCartaoNumero("11115");
+        Optional<Cartoes> cartaoInfo = cartoesService.buscarCartaoNumero("5555666677778884");
 
         CartaoTransacaoDto transacaoTeste = new CartaoTransacaoDto();
         transacaoTeste.setNumeroCartao(cartaoInfo.get().getCartaoNumero());

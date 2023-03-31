@@ -1,0 +1,44 @@
+CREATE TABLE `cartoes` (
+	`id` INT(10) NOT NULL AUTO_INCREMENT,
+	`cartao_numero` VARCHAR(16) NULL DEFAULT NULL COLLATE 'utf8_bin',
+	`senha` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8_bin',
+	`status` CHAR(1) NULL DEFAULT NULL COMMENT 'A - Ativo I - Inativo' COLLATE 'utf8_bin',
+	`data_criacao` DATETIME NULL DEFAULT NULL,
+	`data_atualizacao` DATETIME NULL DEFAULT NULL,
+	`cartao_id` BIGINT(19) NULL DEFAULT NULL,
+	PRIMARY KEY (`id`) USING BTREE
+)
+COLLATE='utf8_bin'
+ENGINE=InnoDB
+AUTO_INCREMENT=8
+;
+
+
+CREATE TABLE `cartoes_saldo` (
+	`id` INT(10) NOT NULL AUTO_INCREMENT,
+	`cartao_id` INT(10) NULL DEFAULT NULL,
+	`saldo` DECIMAL(20,2) NULL DEFAULT NULL,
+	`data_criacao` DATETIME NULL DEFAULT NULL,
+	`data_atualizacao` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`id`) USING BTREE,
+	INDEX `FKd9on5mlc103bmuhnw5iet0ig3` (`cartao_id`) USING BTREE,
+	CONSTRAINT `FKd9on5mlc103bmuhnw5iet0ig3` FOREIGN KEY (`cartao_id`) REFERENCES `cartoes` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+COLLATE='utf8_bin'
+ENGINE=InnoDB
+AUTO_INCREMENT=5
+;
+
+
+CREATE TABLE `cartoes_transacoes` (
+	`id` INT(10) NOT NULL AUTO_INCREMENT,
+	`cartao_id` INT(10) NULL DEFAULT NULL,
+	`valor_transacao` DECIMAL(20,2) NULL DEFAULT NULL,
+	`data_criacao` DATETIME NULL DEFAULT NULL,
+	`data_atualizacao` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`id`) USING BTREE
+)
+COLLATE='utf8_bin'
+ENGINE=InnoDB
+AUTO_INCREMENT=9
+;
